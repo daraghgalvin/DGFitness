@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DG Fitness — Daragh Galvin</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0C0C0C;
+  --off-black: #141414;
+  --panel: #1A1A1A;
+  --border: #2A2A2A;
+  --mid: #444;
+  --muted: #888;
+  --light: #CCCCCC;
+  --white: #F5F5F5;
+  --green: #B8F04A;
+  --green-dim: rgba(184,240,74,0.1);
+  --green-border: rgba(184,240,74,0.3);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: rgba(12,12,12,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--green); }
+
+.nav-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--green);
+  padding: 9px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.nav-cta:hover { opacity: 0.85; }
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 32px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 24px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--green);
+}
+
+h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(56px, 10vw, 100px);
+  font-weight: 800;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-bottom: 32px;
+}
+
+h1 em { font-style: italic; color: var(--green); }
+
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--light);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+.btn-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--green);
+  padding: 14px 32px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+  display: inline-block;
+}
+
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-ghost {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: color 0.15s;
+}
+
+.btn-ghost:hover { color: var(--white); }
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.stat-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-num span { color: var(--green); }
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+section { padding: 96px 32px; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+.alt-bg { background: var(--off-black); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+h2 em { font-style: italic; color: var(--green); }
+
+.section-sub {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+/* WHO */
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.who-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 24px;
+  transition: border-color 0.2s;
+}
+
+.who-card:hover { border-color: var(--green-border); }
+
+.who-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.who-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.who-list li {
+  font-size: 13px;
+  color: var(--light);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.who-list li::before { content: '->'; color: var(--green); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+/* ABOUT */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 15px;
+  color: var(--light);
+  line-height: 1.85;
+  margin-bottom: 18px;
+}
+
+.about-text p:last-child { margin: 0; }
+.about-text strong { color: var(--white); }
+
+.creds {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cred {
+  padding: 18px 20px;
+  background: var(--panel);
+}
+
+.cred-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+.cred-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* WHAT'S NOT */
+.balance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.balance-card {
+  border-radius: 8px;
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.balance-card.yes {
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--light);
+}
+
+.balance-card.no {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.balance-card.yes .b-icon { color: var(--green); }
+.balance-card.no .b-icon { color: var(--mid); }
+.b-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; font-style: normal; }
+
+/* INCLUDED */
+.included-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.included-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  transition: border-color 0.15s;
+}
+
+.included-card:hover { border-color: var(--green-border); }
+
+.included-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.included-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.included-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* PROCESS */
+.process-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.process-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  background: var(--panel);
+}
+
+.process-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+}
+
+.process-content { padding: 20px 24px; }
+.process-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.process-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* PRICING */
+.pricing-wrap { max-width: 520px; margin: 0 auto; }
+
+.pricing-card {
+  background: var(--panel);
+  border: 2px solid var(--green-border);
+  border-radius: 8px;
+  padding: 40px;
+}
+
+.pricing-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.pricing-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 28px;
+}
+
+.pricing-price sup { font-size: 28px; vertical-align: super; }
+.pricing-price span { font-size: 20px; font-weight: 400; color: var(--muted); }
+
+.pricing-features { list-style: none; margin-bottom: 32px; }
+
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--light);
+  line-height: 1.5;
+}
+
+.pricing-features li:last-child { border: none; }
+.pricing-features li::before { content: 'v'; font-family: 'Barlow Condensed', sans-serif; color: var(--green); font-weight: 800; font-size: 16px; flex-shrink: 0; }
+
+.pricing-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--green);
+  padding: 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.pricing-cta:hover { opacity: 0.85; }
+.pricing-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+.final-cta {
+  text-align: center;
+  background: var(--off-black);
+  border-top: 1px solid var(--border);
+}
+
+.final-cta h2 { margin-bottom: 16px; }
+.final-cta p { font-size: 16px; color: var(--muted); max-width: 440px; margin: 0 auto 40px; line-height: 1.7; }
+
+footer {
+  padding: 28px 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--mid);
+}
+
+@media (max-width: 680px) {
+  nav { padding: 16px 20px; }
+  section { padding: 64px 20px; }
+  .hero { padding: 100px 20px 60px; }
+  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .who-grid { grid-template-columns: 1fr; }
+  .balance-grid { grid-template-columns: 1fr; }
+  .pricing-card { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">DG <span>Fitness</span></a>
+  <a class="nav-cta" href="#apply">Work with me</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Daragh Galvin · 1-on-1 Online Coaching</p>
+    <h1>Build<br>the body.<br><em>Keep the</em><br><em>balance.</em></h1>
+    <p class="hero-sub">I help people get lean, build muscle and feel genuinely confident in how they look — without extreme dieting, without living in the gym, and without giving up the life they enjoy.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#apply">Work with me</a>
+      <a class="btn-ghost" href="#about">Who am I?</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1<span>:1</span></div>
+        <div class="stat-label">Personal coaching only</div>
+      </div>
+      <div>
+        <div class="stat-num">PT<span> Qual</span></div>
+        <div class="stat-label">Certified personal trainer</div>
+      </div>
+      <div>
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Years training experience</div>
+      </div>
+      <div>
+        <div class="stat-num">GAA</div>
+        <div class="stat-label">Inter-county level</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="alt-bg">
+  <div class="section-inner">
+    <p class="eyebrow">Who I work with</p>
+    <h2>You train.<br><em>I make it work.</em></h2>
+    <p class="section-sub">Whether you are just starting out or you have been at it for a while without seeing the results you want, I will give you a clear plan and real support.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-title">For women</div>
+        <ul class="who-list">
+          <li>You want to feel confident in your body but are not sure where to start</li>
+          <li>The gym feels overwhelming and you want someone to guide you properly</li>
+          <li>You want to build a lean, toned physique without extreme dieting</li>
+          <li>You want to feel strong and confident, not just smaller</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <div class="who-title">For men</div>
+        <ul class="who-list">
+          <li>You want to build muscle and feel good about how you look</li>
+          <li>You do not want to become a bodybuilder or give up your social life</li>
+          <li>You play sport and want a physique that looks good off the pitch too</li>
+          <li>You want to look and feel confident every single day</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="eyebrow">About me</p>
+    <h2>Why work<br><em>with me?</em></h2>
+    <div class="about-layout">
+      <div class="about-text">
+        <p>I am Daragh, a 24-year-old from Ireland. I have been training since I was 16 and spent years playing GAA at the highest level. That meant figuring out early on how to train smart, eat right and still perform week in, week out.</p>
+        <p>I know what it feels like to want to look good and feel confident but not know exactly how to get there. I spent years working it out through trial and error so you do not have to.</p>
+        <p>I am a qualified personal trainer and I coach people who want real, lasting results. <strong>No crash diets. No extreme programmes. No giving up the things you enjoy.</strong> Just a clear plan, consistent work and a physique you are genuinely proud of.</p>
+      </div>
+      <div class="creds">
+        <div class="cred">
+          <div class="cred-title">Inter-County GAA</div>
+          <div class="cred-desc">Played at the highest level — built real knowledge of training, nutrition and recovery doing it</div>
+        </div>
+        <div class="cred">
+          <div class="cred-title">Certified Personal Trainer</div>
+          <div class="cred-desc">Qualified PT with a solid understanding of programming and nutrition</div>
+        </div>
+        <div class="cred">
+          <div class="cred-title">8+ Years Training</div>
+          <div class="cred-desc">Started at 16 alongside high-level sport — years of real experience, not just theory</div>
+        </div>
+        <div class="cred">
+          <div class="cred-title">Balance Over Extremes</div>
+          <div class="cred-desc">I have built and maintained my physique while playing sport, socialising and living a normal life</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BALANCE -->
+<section class="alt-bg">
+  <div class="section-inner">
+    <p class="eyebrow">How I coach</p>
+    <h2>Results without<br><em>the extremes.</em></h2>
+    <p class="section-sub">You do not need to suffer to look good. Here is what working with me looks like.</p>
+    <div class="balance-grid">
+      <div class="balance-card yes">
+        <i class="b-icon">+</i>
+        <span>Build a lean, muscular physique you are proud of</span>
+      </div>
+      <div class="balance-card no">
+        <i class="b-icon">x</i>
+        <span>Extreme bulk and cut cycles that are impossible to stick to</span>
+      </div>
+      <div class="balance-card yes">
+        <i class="b-icon">+</i>
+        <span>Eat well and still enjoy your food and social life</span>
+      </div>
+      <div class="balance-card no">
+        <i class="b-icon">x</i>
+        <span>Crash diets that leave you miserable and back to square one</span>
+      </div>
+      <div class="balance-card yes">
+        <i class="b-icon">+</i>
+        <span>Train 3 to 4 times a week and see real, visible results</span>
+      </div>
+      <div class="balance-card no">
+        <i class="b-icon">x</i>
+        <span>Spending every evening in the gym with no life outside of it</span>
+      </div>
+      <div class="balance-card yes">
+        <i class="b-icon">+</i>
+        <span>Feel genuinely confident in your body every day</span>
+      </div>
+      <div class="balance-card no">
+        <i class="b-icon">x</i>
+        <span>Generic plans that ignore who you are and what you actually need</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section>
+  <div class="section-inner">
+    <p class="eyebrow">What you get</p>
+    <h2>Everything you need<br><em>to get there.</em></h2>
+    <p class="section-sub">When you work with me you get full access, not a template dropped in a portal.</p>
+    <div class="included-grid">
+      <div class="included-card">
+        <div class="included-tag">Training</div>
+        <div class="included-title">Your Programme</div>
+        <div class="included-desc">A training plan built around your goals, your schedule and your experience level. If you have never trained before, I will walk you through everything from day one. Updated every 4 weeks as you progress.</div>
+      </div>
+      <div class="included-card">
+        <div class="included-tag">Nutrition</div>
+        <div class="included-title">Your Nutrition Plan</div>
+        <div class="included-desc">Calories, macros and a practical eating structure that fits your life. No foods banned, no extreme restriction. I will show you how to eat in a way that gets results and you can actually stick to.</div>
+      </div>
+      <div class="included-card">
+        <div class="included-tag">Accountability</div>
+        <div class="included-title">Weekly Check-ins</div>
+        <div class="included-desc">Every week we review how things are going, adjust what needs adjusting and keep momentum going. No guessing, no stalling.</div>
+      </div>
+      <div class="included-card">
+        <div class="included-tag">Support</div>
+        <div class="included-title">WhatsApp Access</div>
+        <div class="included-desc">You can message me directly Monday to Friday. Questions about your training, your nutrition, anything at all. I will get back to you properly, not with a one-liner.</div>
+      </div>
+      <div class="included-card">
+        <div class="included-tag">Progress</div>
+        <div class="included-title">4-Week Reviews</div>
+        <div class="included-desc">Your programme changes as you do. Every 4 weeks I review your results and update your plan so you keep progressing and never plateau.</div>
+      </div>
+      <div class="included-card">
+        <div class="included-tag">Access</div>
+        <div class="included-title">Beginner Friendly</div>
+        <div class="included-desc">You do not need any experience to work with me. If you are starting from scratch I will make sure you know exactly what to do and why you are doing it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="alt-bg">
+  <div class="section-inner">
+    <p class="eyebrow">How it works</p>
+    <h2>Simple from<br><em>start to finish.</em></h2>
+    <p class="section-sub">Four steps and you are up and running.</p>
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-num">1</div>
+        <div class="process-content">
+          <div class="process-title">Apply</div>
+          <div class="process-desc">Fill out the application form below. Tell me about your goals, your lifestyle and where you are starting from. It takes about 5 minutes.</div>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">2</div>
+        <div class="process-content">
+          <div class="process-title">I build your plan</div>
+          <div class="process-desc">I put together your training and nutrition plan from scratch, built specifically around you. No copy and paste, no templates.</div>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">3</div>
+        <div class="process-content">
+          <div class="process-title">We get to work</div>
+          <div class="process-desc">You follow your plan, check in with me every week and I adjust things in real time. You always know what to do and why.</div>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">4</div>
+        <div class="process-content">
+          <div class="process-title">You see the results</div>
+          <div class="process-desc">A body you are genuinely proud of, built around your life. Not at the expense of it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <p class="eyebrow">Investment</p>
+    <h2>One offer.<br><em>Full access.</em></h2>
+    <div class="pricing-wrap">
+      <div class="pricing-card">
+        <div class="pricing-tag">1-on-1 Coaching</div>
+        <div class="pricing-price"><sup>€</sup>149<span> / month</span></div>
+        <ul class="pricing-features">
+          <li>Custom training programme built around your goals and schedule</li>
+          <li>Full nutrition plan, practical and built to last</li>
+          <li>Weekly check-ins and real-time adjustments</li>
+          <li>WhatsApp access Monday to Friday</li>
+          <li>Programme updated every 4 weeks</li>
+          <li>Beginner friendly, no experience needed</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a class="pricing-cta" href="#apply">Apply now</a>
+        <p class="pricing-note">I personally review every application and will be in touch within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="apply">
+  <div class="section-inner">
+    <p class="eyebrow">Ready to start</p>
+    <h2>Build the body.<br><em>Keep the balance.</em></h2>
+    <p>Fill out the short application below and I will be in touch within 48 hours.</p>
+    <a class="btn-primary" href="https://athleticbuild.netlify.app" target="_blank">Apply for coaching</a>
+  </div>
+</section>
+
+<footer>
+  <p>2026 DG Fitness · Daragh Galvin · @dgfitcoaching</p>
+</footer>
+
+</body>
+</html>

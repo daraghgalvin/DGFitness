@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — DG Fitness</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0C0C0C;
+  --off-black: #141414;
+  --panel: #1A1A1A;
+  --border: #2A2A2A;
+  --mid: #444;
+  --muted: #888;
+  --light: #CCCCCC;
+  --white: #F5F5F5;
+  --green: #B8F04A;
+  --green-dim: rgba(184,240,74,0.1);
+  --green-border: rgba(184,240,74,0.3);
+  --red: #FF4444;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: rgba(12,12,12,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--green); }
+
+.hero {
+  padding: 130px 32px 56px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 20px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--green);
+}
+
+h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(44px, 8vw, 68px);
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-bottom: 20px;
+}
+
+h1 em { font-style: italic; color: var(--green); }
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--light);
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+.form-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 64px 32px 80px;
+}
+
+.form-section {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--green);
+}
+
+.field { margin-bottom: 24px; }
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--light);
+  margin-bottom: 8px;
+}
+
+label .req { color: var(--green); margin-left: 2px; }
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(--green); }
+input::placeholder, textarea::placeholder { color: var(--mid); }
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-color: var(--panel);
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+select option { background: var(--panel); }
+textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+.choice-group { display: flex; flex-direction: column; gap: 8px; }
+.choice-group.inline { flex-direction: row; flex-wrap: wrap; }
+
+.choice-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--light);
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.choice-opt:has(input:checked) {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--white);
+}
+
+.choice-opt input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--green);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.scale-row { display: flex; gap: 6px; }
+
+.scale-btn {
+  flex: 1;
+  padding: 10px 4px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.scale-btn:hover { border-color: var(--mid); color: var(--white); }
+.scale-btn.selected { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.error-msg { font-size: 12px; color: var(--red); margin-top: 6px; display: none; }
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea { border-color: var(--red); }
+.field.has-error .error-msg { display: block; }
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--green);
+  color: var(--black);
+  border: none;
+  border-radius: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover { opacity: 0.85; }
+
+.submit-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 120px 32px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.success-mark {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 20px;
+  color: var(--green);
+  background: var(--green-dim);
+}
+
+.success-screen h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.success-screen p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+footer {
+  padding: 28px 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--mid);
+}
+
+@media (max-width: 600px) {
+  nav { padding: 16px 20px; }
+  .hero { padding: 110px 20px 48px; }
+  .form-wrap { padding: 48px 20px 64px; }
+  .scale-btn { font-size: 12px; padding: 10px 2px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">DG <span>Fitness</span></a>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">1-on-1 Coaching Application</p>
+    <h1>Tell me<br><em>about you.</em></h1>
+    <p class="hero-sub">Fill this out honestly and I will get back to you within 48 hours. The more detail you give me, the better I can help you.</p>
+  </div>
+</div>
+
+<div class="form-wrap">
+  <form id="intake-form" novalidate>
+
+    <div class="form-section">
+      <p class="section-label">About you</p>
+
+      <div class="field" id="field-name">
+        <label for="name">What is your name? <span class="req">*</span></label>
+        <input type="text" id="name" name="name" placeholder="Your full name">
+        <p class="error-msg">Please enter your name</p>
+      </div>
+
+      <div class="field" id="field-email">
+        <label for="email">What is your email address? <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@email.com">
+        <p class="error-msg">Please enter a valid email</p>
+      </div>
+
+      <div class="field" id="field-age">
+        <label for="age">How old are you? <span class="req">*</span></label>
+        <input type="number" id="age" name="age" placeholder="e.g. 22" min="16" max="80">
+        <p class="error-msg">Please enter your age</p>
+      </div>
+
+      <div class="field" id="field-location">
+        <label for="location">Where are you based? <span class="req">*</span></label>
+        <input type="text" id="location" name="location" placeholder="e.g. Dublin, Ireland">
+        <p class="error-msg">Please enter your location</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <p class="section-label">Your training</p>
+
+      <div class="field" id="field-sport">
+        <label>Do you play sport? <span class="req">*</span></label>
+        <div class="choice-group">
+          <label class="choice-opt"><input type="radio" name="sport" value="yes-gaa"> Yes, I play GAA</label>
+          <label class="choice-opt"><input type="radio" name="sport" value="yes-other"> Yes, I play another sport</label>
+          <label class="choice-opt"><input type="radio" name="sport" value="no"> No, I do not play sport</label>
+        </div>
+        <p class="error-msg">Please select an option</p>
+      </div>
+
+      <div class="field" id="field-experience">
+        <label for="experience">How would you describe your gym experience? <span class="req">*</span></label>
+        <select id="experience" name="experience">
+          <option value="" disabled selected>Select one</option>
+          <option>Complete beginner, never really trained before</option>
+          <option>Some experience, less than a year</option>
+          <option>Training for 1 to 2 years</option>
+          <option>Training for 2+ years</option>
+        </select>
+        <p class="error-msg">Please select an option</p>
+      </div>
+
+      <div class="field" id="field-gym">
+        <label>Do you have access to a gym? <span class="req">*</span></label>
+        <div class="choice-group inline">
+          <label class="choice-opt"><input type="radio" name="gym" value="yes"> Yes</label>
+          <label class="choice-opt"><input type="radio" name="gym" value="home"> Home gym</label>
+          <label class="choice-opt"><input type="radio" name="gym" value="no"> No gym access</label>
+        </div>
+        <p class="error-msg">Please select an option</p>
+      </div>
+
+      <div class="field" id="field-days">
+        <label>How many days a week can you train? <span class="req">*</span></label>
+        <div class="choice-group inline">
+          <label class="choice-opt"><input type="radio" name="days" value="1-2"> 1 to 2</label>
+          <label class="choice-opt"><input type="radio" name="days" value="3"> 3</label>
+          <label class="choice-opt"><input type="radio" name="days" value="4"> 4</label>
+          <label class="choice-opt"><input type="radio" name="days" value="5+"> 5+</label>
+        </div>
+        <p class="error-msg">Please select an option</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <p class="section-label">Your goals</p>
+
+      <div class="field" id="field-goal">
+        <label>What is your main goal right now? <span class="req">*</span></label>
+        <div class="choice-group">
+          <label class="choice-opt"><input type="radio" name="goal" value="build-muscle"> Build muscle and get stronger</label>
+          <label class="choice-opt"><input type="radio" name="goal" value="lose-fat"> Lose body fat and get leaner</label>
+          <label class="choice-opt"><input type="radio" name="goal" value="both"> Build muscle and lose fat at the same time</label>
+          <label class="choice-opt"><input type="radio" name="goal" value="confidence"> Feel more confident in how I look and feel</label>
+          <label class="choice-opt"><input type="radio" name="goal" value="performance"> Improve my performance without sacrificing my physique</label>
+        </div>
+        <p class="error-msg">Please select your main goal</p>
+      </div>
+
+      <div class="field" id="field-describe">
+        <label for="describe">Tell me where you are right now and what you want to change <span class="req">*</span></label>
+        <textarea id="describe" name="describe" placeholder="Be as honest as you like. Where are you at, what have you tried, what is not working. The more you tell me the better I can help."></textarea>
+        <p class="error-msg">Please fill this in</p>
+      </div>
+
+      <div class="field">
+        <label>How consistent have you been with training lately?</label>
+        <div class="scale-row" id="consistency-scale">
+          <button type="button" class="scale-btn" data-val="1">1</button>
+          <button type="button" class="scale-btn" data-val="2">2</button>
+          <button type="button" class="scale-btn" data-val="3">3</button>
+          <button type="button" class="scale-btn" data-val="4">4</button>
+          <button type="button" class="scale-btn" data-val="5">5</button>
+          <button type="button" class="scale-btn" data-val="6">6</button>
+          <button type="button" class="scale-btn" data-val="7">7</button>
+          <button type="button" class="scale-btn" data-val="8">8</button>
+          <button type="button" class="scale-btn" data-val="9">9</button>
+          <button type="button" class="scale-btn" data-val="10">10</button>
+        </div>
+        <div class="scale-labels"><span>Not at all</span><span>Very consistent</span></div>
+        <input type="hidden" id="consistency" name="consistency">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <p class="section-label">One last thing</p>
+
+      <div class="field" id="field-invest">
+        <label>Are you ready to get started? <span class="req">*</span></label>
+        <div class="choice-group">
+          <label class="choice-opt"><input type="radio" name="invest" value="yes"> Yes, I am ready to start now</label>
+          <label class="choice-opt"><input type="radio" name="invest" value="soon"> Not right now but soon</label>
+          <label class="choice-opt"><input type="radio" name="invest" value="info"> I just want more information first</label>
+        </div>
+        <p class="error-msg">Please select an option</p>
+      </div>
+
+      <div class="field">
+        <label for="heard">How did you find me?</label>
+        <select id="heard" name="heard">
+          <option value="" disabled selected>Select one</option>
+          <option>TikTok</option>
+          <option>Instagram</option>
+          <option>Word of mouth</option>
+          <option>Google</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Send my application</button>
+    <p class="submit-note">I personally read every application and will get back to you within 48 hours.</p>
+
+  </form>
+
+  <div class="success-screen" id="success">
+    <div class="success-mark">✓</div>
+    <h2>Got it.</h2>
+    <p>I will read through your application and get back to you within 48 hours. Follow me on TikTok and Instagram at <strong>@dgfitcoaching</strong> in the meantime.</p>
+  </div>
+</div>
+
+<footer>
+  <p>2026 DG Fitness · Daragh Galvin · @dgfitcoaching</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('consistency').value = btn.dataset.val;
+    });
+  });
+
+  document.getElementById('intake-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    const required = [
+      { id: 'field-name', check: () => document.getElementById('name').value.trim() },
+      { id: 'field-email', check: () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value) },
+      { id: 'field-age', check: () => document.getElementById('age').value },
+      { id: 'field-location', check: () => document.getElementById('location').value.trim() },
+      { id: 'field-sport', check: () => document.querySelector('input[name="sport"]:checked') },
+      { id: 'field-experience', check: () => document.getElementById('experience').value },
+      { id: 'field-gym', check: () => document.querySelector('input[name="gym"]:checked') },
+      { id: 'field-days', check: () => document.querySelector('input[name="days"]:checked') },
+      { id: 'field-goal', check: () => document.querySelector('input[name="goal"]:checked') },
+      { id: 'field-describe', check: () => document.getElementById('describe').value.trim().length > 10 },
+      { id: 'field-invest', check: () => document.querySelector('input[name="invest"]:checked') },
+    ];
+
+    required.forEach(({ id, check }) => {
+      const ok = !!check();
+      document.getElementById(id).classList.toggle('has-error', !ok);
+      if (!ok) valid = false;
+    });
+
+    if (!valid) {
+      document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', document.getElementById('name').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('age', document.getElementById('age').value);
+    formData.append('location', document.getElementById('location').value);
+    formData.append('sport', document.querySelector('input[name="sport"]:checked')?.value || '');
+    formData.append('experience', document.getElementById('experience').value);
+    formData.append('gym', document.querySelector('input[name="gym"]:checked')?.value || '');
+    formData.append('days', document.querySelector('input[name="days"]:checked')?.value || '');
+    formData.append('goal', document.querySelector('input[name="goal"]:checked')?.value || '');
+    formData.append('describe', document.getElementById('describe').value);
+    formData.append('consistency', document.getElementById('consistency').value);
+    formData.append('invest', document.querySelector('input[name="invest"]:checked')?.value || '');
+    formData.append('heard', document.getElementById('heard').value);
+
+    fetch('https://formspree.io/f/mwvjjkdw', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(res => {
+      if (res.ok) {
+        document.getElementById('intake-form').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    }).catch(() => {
+      alert('Something went wrong. Please check your connection and try again.');
+    });
+  });
+</script>
+
+</body>
+</html>
